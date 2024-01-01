@@ -1,6 +1,7 @@
 """ First we will import all necessary modules"""
 import smtplib
 from email.mime.multipart import MIMEMultipart
+"""email package containe mime submodule and multipart is submodule of mime and MIMEMultipart is a class in it"""
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
@@ -27,7 +28,7 @@ ctime=time.strftime("%I:%M:%S %p")
 msg['Subject']=f"SMTP SERVER TEST {cday} {ctime}"
 msg['From']=mymail
 msg['To']="khanaseef97@gmail.com"
-
+msg['Cc']="abdullahmotors70@gmail.com"
 """Now add the text part of the email here,if dont need to send logo add </p></html> after via python."""
 
 body="""
