@@ -69,5 +69,4 @@ while True:                     #this is an infinite loop that checks for tasks 
 
 
 ###we can also schedule cron job to fulfill our scheduling purpose and batch file in windows.
-
-
+###need to install schedule lib by <python3 install schedule > first
