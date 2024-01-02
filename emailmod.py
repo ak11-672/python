@@ -11,10 +11,10 @@ import time as t
 import schedule
 def email():
     """Now we will set the email and pass and provide location of our attachment and logo"""
-    mymail="khanaseef972.0@gmail.com"
-    mypass="fqur vhlu kxop ppdb"
-    filename=r"/hdd1/python/medprac.py"
-    logo=r"/hdd1/python/PA/alnafi-220930-222108.jpg"
+    mymail="enter your email"
+    mypass="enter app pass"
+    filename=r"enter path to file "
+    logo=r"enter path to logo"
 
     """initializing the mime multipart object and giving the necc inputs"""
 
@@ -27,8 +27,8 @@ def email():
     ctime=time.strftime("%I:%M:%S %p")
     msg['Subject']=f"SMTP SERVER TEST {cday} {ctime}"
     msg['From']=mymail
-    msg['To']="khanaseef97@gmail.com"
-    msg['Cc']="abdullahmotors70@gmail.com"
+    msg['To']="enter recipient address"
+    msg['Cc']="enter address of others"
     """Now add the text part of the email here,if dont need to send logo add </p></html> after via python."""
 
     body="""
@@ -59,13 +59,15 @@ def email():
     connection.close()
     print('Mail sent')
     exit()
-schedule.every().day.at("00:10").do(email)
-
-while True:
+    #now we will schedule the code to run at 12:00 PM every day
+schedule.every().day.at("12:00").do(email)
+#control goes straight to while loop.
+while True:                     #this is an infinite loop that checks for tasks waiting to be completed.
     schedule.run_pending()
-    t.sleep(1)
+    t.sleep(1)                    #this makes sures the script doesnt consume cpu resources too much and checks after 1 second delay.
 
 
 
+###we can also schedule cron job to fulfill our scheduling purpose and batch file in windows.
 
 
