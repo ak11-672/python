@@ -1,0 +1,67 @@
+import paramiko
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email.mime.image import MIMEImage
+from email import  encoders
+from datetime import *
+import time as t
+
+day=date.today()
+time=datetime.now()
+
+
+my_custom=day.strftime("%B %d %Y")
+current_time=time.strftime("%I:%M:%S %p")
+
+
+
+
+
+hostname="192.168.1.11"
+username="aadmin"
+password="123@abd"
+client= paramiko.SSHClient()
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+client.connect(hostname=hostname,username=username,password=password)
+
+mycmd="free -g  | grep Mem | awk '{print $7}'"
+
+
+stdin, stdout, stderr = client.exec_command(mycmd)
+
+mycmdout = stdout.read().decode()
+print(mycmdout)
+if int(mycmdout) <=2:
+msg = MIMEMultipart()
+mylogo = r"C:\Users\AbdealiDodiya\Desktop\DevOps\Python\Lecture 40\alnafi.jpg"
+my_mail = "automation52786@gmail.com"
+password = "mcmptkfmktcokkuc"
+msg['Subject'] = f"ALERT : Memroy Available {mycmdout} GB on Jboss server at {my_custom}"
+msg['From'] = my_mail
+msg['To'] = my_mail
+msg['Cc'] = 'abdealipython@gmail.com'
+
+body = """
+<html><p> <b> <i>Hi Team,<br> Please check JBOSS server memrory. <b> <i> <br> <img src="cid:alogo" width="100" height="50"></p> </html>
+"""
+msg.attach(MIMEText(body, 'html'))
+###LOGO section
+filelogo = open(mylogo, 'rb')
+msgIMAGE = MIMEImage(filelogo.read())
+filelogo.close()
+msgIMAGE.add_header('Content-ID', '<alogo>')
+msg.attach(msgIMAGE)
+
+
+
+connection = smtplib.SMTP('smtp.gmail.com')
+connection.starttls()  # TLS transport layer security
+
+connection.login(user=my_mail, password=password)
+connection.send_message(msg)
+connection.close()
+print("Mail has been sent")
+else:
+print("Everything is fine")
